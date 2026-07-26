@@ -92,7 +92,21 @@ Requirements Analysis → System Design → Implementation → Testing → Docum
 
 ---
 
-### Prompt 4: Project Scaffold
+### Prompt 4: Prompt Orchestration Skill
+**User:**
+> There should also be a skill for agents to follow. Each time we are adding new prompts, this skill should be invoked by the agents.md file — first sanitize the prompt, add it to the relevant phase, update other skills as per the prompt details, then find what needs to be updated and invoke the particular skill.
+
+**AI Contribution:**
+- Created `skills/prompt-orchestration.md` — an orchestration workflow that ensures:
+  1. Every prompt is sanitized (secrets/PII removed)
+  2. Logged to agents.md under the correct phase
+  3. Affected skills are identified and updated
+  4. Work is routed to the correct implementation skill
+- Established the rule: "always log first, implement second"
+
+---
+
+### Prompt 5: Project Scaffold
 _(to be filled as implementation proceeds)_
 
 ---
@@ -118,6 +132,8 @@ _(to be filled as implementation proceeds)_
 ---
 
 ## Skills Demonstrated by AI
+
+> **Note:** Every new prompt follows the workflow defined in [`skills/prompt-orchestration.md`](./skills/prompt-orchestration.md) — sanitize → log → analyze impact → update skills → route to implementation.
 
 - **Code Generation** — Spring Boot REST APIs, JPA entities, service classes, DTOs
 - **Architecture Design** — Layered architecture, separation of concerns, design patterns
