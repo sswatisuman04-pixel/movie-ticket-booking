@@ -123,27 +123,34 @@ Requirements Analysis → System Design → Implementation → Testing → Docum
 
 ---
 
-### Prompt 6: Service Layer & Business Logic
+### Prompt 6: Repositories & Service Layer
+**User:**
+> (Continuation of "Let's start with all the next set of tasks")
+
+**AI Contribution:**
+- Created 14 repository interfaces with custom query methods
+- Implemented 10 service classes with full business logic (BookingService, PricingService, DiscountService, RefundService, etc.)
+- Created 7 custom exception classes + GlobalExceptionHandler
+- Created 3 event POJOs for async notifications
+- Build verified: SUCCESS
+
+---
+
+### Prompt 7: README.md Setup Guide
+**User:**
+> Let's update the README.md file with project directory explanation, steps to download and basic project setup and finally what steps are needed to start the server etc.
+
+**AI Contribution:**
+- Rewrote README.md with project structure, prerequisites, clone/build/run steps, PostgreSQL setup, test commands, and API overview
+
+---
+
+### Prompt 8: REST Controllers & DTOs
 _(to be filled as implementation proceeds)_
 
 ---
 
-### Prompt 5: Core Entity Implementation
-_(to be filled as implementation proceeds)_
-
----
-
-### Prompt 6: Service Layer & Business Logic
-_(to be filled as implementation proceeds)_
-
----
-
-### Prompt 7: API Controllers & Security
-_(to be filled as implementation proceeds)_
-
----
-
-### Prompt 8: Testing
+### Prompt 9: Security & Testing
 _(to be filled as implementation proceeds)_
 
 ---
