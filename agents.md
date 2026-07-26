@@ -146,7 +146,10 @@ Requirements Analysis → System Design → Implementation → Testing → Docum
 ---
 
 ### Prompt 8: REST Controllers & DTOs
-_(to be filled as implementation proceeds)_
+**User:**
+> Continue with next steps.
+
+**AI Contribution:**
 
 ---
 
