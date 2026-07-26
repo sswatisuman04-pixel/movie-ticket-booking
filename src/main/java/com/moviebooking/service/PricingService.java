@@ -79,12 +79,14 @@ public class PricingService {
         List<PricingTier> tiers = pricingTierRepository.findByTheaterIdAndSeatType(theaterId, seatType);
 
         for (PricingTier tier : tiers) {
-            if (tier.getApplicableDays() != null && tier.getApplicableDays().toUpperCase().contains(dayOfWeek)) {
+            String days = tier.getApplicableDays();
+            if (days != null && (days.equalsIgnoreCase("ALL")
+                    || days.toUpperCase().contains(dayOfWeek))) {
                 return tier.getBasePrice().multiply(tier.getMultiplier());
             }
         }
 
-        // If no day-specific match, use first tier without day restriction or with matching type
+        // If no day-specific match, use first tier without day restriction
         for (PricingTier tier : tiers) {
             if (tier.getApplicableDays() == null || tier.getApplicableDays().isEmpty()) {
                 return tier.getBasePrice().multiply(tier.getMultiplier());

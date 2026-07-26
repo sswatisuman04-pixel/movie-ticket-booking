@@ -69,6 +69,10 @@ public class DiscountService {
         discountCodeRepository.delete(discountCode);
     }
 
+    public DiscountCode findByCode(String code) {
+        return discountCodeRepository.findByCode(code).orElse(null);
+    }
+
     @Transactional
     public BigDecimal validateAndApplyDiscount(String code, BigDecimal totalAmount) {
         DiscountCode discountCode = discountCodeRepository.findByCode(code)

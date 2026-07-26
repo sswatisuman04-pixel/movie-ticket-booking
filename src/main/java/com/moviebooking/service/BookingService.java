@@ -116,8 +116,7 @@ public class BookingService {
         DiscountCode discountCode = null;
         if (discountCodeStr != null && !discountCodeStr.isBlank()) {
             discountApplied = discountService.validateAndApplyDiscount(discountCodeStr, totalAmount);
-            discountCode = new DiscountCode();
-            discountCode.setCode(discountCodeStr);
+            discountCode = discountService.findByCode(discountCodeStr);
         }
 
         BigDecimal finalAmount = totalAmount.subtract(discountApplied);
@@ -186,7 +185,8 @@ public class BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found for booking id: " + bookingId));
         payment.setRefundAmount(refundAmount);
         payment.setRefundTime(LocalDateTime.now());
-        payment.setStatus(PaymentStatus.REFUNDED);
+        payment.setStatus(refundAmount.compareTo(payment.getAmount()) >= 0
+                ? PaymentStatus.REFUNDED : PaymentStatus.PARTIAL_REFUND);
         paymentRepository.save(payment);
 
         // Release seats back to AVAILABLE
