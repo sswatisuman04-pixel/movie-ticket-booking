@@ -106,7 +106,24 @@ Requirements Analysis → System Design → Implementation → Testing → Docum
 
 ---
 
-### Prompt 5: Project Scaffold
+### Prompt 5: Project Scaffold & Domain Models
+**User:**
+> Let's start with all the next set of tasks and follow the process I told
+
+**AI Contribution:**
+- Created full Spring Boot 3.2.5 project scaffold in the repo root
+- pom.xml with all dependencies (Web, JPA, Security, Validation, H2, PostgreSQL, JWT, Lombok, Test)
+- Maven wrapper (3.9.6)
+- 9 enum classes: Role, SeatType, ShowSeatStatus, BookingStatus, PaymentStatus, DiscountType, NotificationType, NotificationChannel, NotificationStatus
+- 14 JPA entity classes with proper annotations, relationships, and @Version for optimistic locking
+- application.yml (H2 default) + application-postgres.yml
+- 12 empty package placeholders for future layers
+- .gitignore for Java/Maven/IDE
+- Build verified: `./mvnw clean compile` → SUCCESS
+
+---
+
+### Prompt 6: Service Layer & Business Logic
 _(to be filled as implementation proceeds)_
 
 ---
