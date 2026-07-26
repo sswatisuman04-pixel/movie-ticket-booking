@@ -145,16 +145,25 @@ Requirements Analysis → System Design → Implementation → Testing → Docum
 
 ---
 
-### Prompt 8: REST Controllers & DTOs
+### Prompt 8: REST Controllers, DTOs, Security, Hold, Pricing, Notifications & Tests
 **User:**
 > Continue with next steps.
 
 **AI Contribution:**
+- Implemented 13 request DTOs + 13 response DTOs with Jakarta Validation
+- Built 11 controllers (8 admin CRUD, 2 customer, 1 auth)
+- Implemented Spring Security with JWT (HS256), BCrypt, RBAC (ADMIN/CUSTOMER)
+- Added DataSeeder for admin user on startup
+- Created SeatHoldScheduler (30s expiry cleanup) + voluntary release endpoint
+- Fixed PricingService ("ALL" days), DiscountService (entity fetch), RefundService (PARTIAL_REFUND)
+- Built async notification system: AsyncConfig, NotificationService, NotificationListener, ReminderScheduler
+- Wrote 28 tests (17 unit + 10 integration + 1 context load) — all passing
+- Updated README.md with full setup guide
 
 ---
 
 ### Prompt 9: Security & Testing
-_(to be filled as implementation proceeds)_
+_(merged into Prompt 8 above — single continuous implementation session)_
 
 ---
 
