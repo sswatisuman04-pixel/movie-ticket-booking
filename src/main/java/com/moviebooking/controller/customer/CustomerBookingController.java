@@ -54,6 +54,13 @@ public class CustomerBookingController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/release")
+    public ResponseEntity<Void> releaseHold(@Valid @RequestBody HoldSeatsRequest request) {
+        Long userId = getCurrentUserId();
+        bookingService.releaseHold(userId, request.getShowId(), request.getShowSeatIds());
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/confirm")
     public ResponseEntity<BookingResponse> confirmBooking(@Valid @RequestBody ConfirmBookingRequest request) {
         Long userId = getCurrentUserId();

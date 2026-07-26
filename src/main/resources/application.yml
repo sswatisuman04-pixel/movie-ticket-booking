@@ -19,6 +19,7 @@ spring:
 app:
   booking:
     hold-duration-minutes: 5
+    hold-cleanup-interval-ms: 30000
   jwt:
     secret: movie-booking-secret-key-for-jwt-token-generation-min-256-bits-long
     expiration-ms: 86400000

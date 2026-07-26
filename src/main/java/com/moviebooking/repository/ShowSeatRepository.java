@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +25,8 @@ public interface ShowSeatRepository extends JpaRepository<ShowSeat, Long> {
     @Query("SELECT ss FROM ShowSeat ss WHERE ss.status = 'HELD' AND ss.holdExpiresAt < :now")
     List<ShowSeat> findExpiredHolds(@Param("now") LocalDateTime now);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
+    @Transactional
     @Query("UPDATE ShowSeat ss SET ss.status = 'AVAILABLE', ss.heldBy = null, ss.holdExpiresAt = null " +
             "WHERE ss.status = 'HELD' AND ss.holdExpiresAt < :now")
     int releaseExpiredHolds(@Param("now") LocalDateTime now);

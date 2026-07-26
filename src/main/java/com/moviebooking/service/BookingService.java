@@ -50,6 +50,13 @@ public class BookingService {
                         .orElseThrow(() -> new ResourceNotFoundException("ShowSeat not found with id: " + id)))
                 .toList();
 
+        // Validate all seats belong to the specified show
+        for (ShowSeat seat : seats) {
+            if (!seat.getShow().getId().equals(showId)) {
+                throw new SeatUnavailableException("Seat id=" + seat.getId() + " does not belong to show id=" + showId);
+            }
+        }
+
         // Validate all seats are AVAILABLE
         for (ShowSeat seat : seats) {
             if (seat.getStatus() != ShowSeatStatus.AVAILABLE) {
@@ -195,6 +202,32 @@ public class BookingService {
 
         log.info("Booking cancelled: id={}, user={}, refund={}", bookingId, userId, refundAmount);
         return new CancellationResponse(bookingId, refundAmount, booking.getStatus());
+    }
+
+    @Transactional
+    public void releaseHold(Long userId, Long showId, List<Long> showSeatIds) {
+        showRepository.findById(showId)
+                .orElseThrow(() -> new ResourceNotFoundException("Show not found with id: " + showId));
+
+        List<ShowSeat> seats = showSeatIds.stream()
+                .map(id -> showSeatRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("ShowSeat not found with id: " + id)))
+                .toList();
+
+        for (ShowSeat seat : seats) {
+            if (seat.getStatus() != ShowSeatStatus.HELD) {
+                throw new SeatUnavailableException("Seat id=" + seat.getId() + " is not in HELD status");
+            }
+            if (seat.getHeldBy() == null || !seat.getHeldBy().getId().equals(userId)) {
+                throw new SeatUnavailableException("Seat id=" + seat.getId() + " is not held by this user");
+            }
+            seat.setStatus(ShowSeatStatus.AVAILABLE);
+            seat.setHeldBy(null);
+            seat.setHoldExpiresAt(null);
+            showSeatRepository.save(seat);
+        }
+
+        log.info("User id={} released {} held seats for show id={}", userId, showSeatIds.size(), showId);
     }
 
     public List<Booking> getBookingsByUser(Long userId) {
