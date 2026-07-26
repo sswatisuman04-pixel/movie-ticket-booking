@@ -8,11 +8,13 @@ import com.moviebooking.entity.BookingSeat;
 import com.moviebooking.entity.ShowSeat;
 import com.moviebooking.repository.BookingSeatRepository;
 import com.moviebooking.repository.ShowSeatRepository;
+import com.moviebooking.security.CustomUserDetails;
 import com.moviebooking.service.BookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +28,10 @@ public class CustomerBookingController {
     private final ShowSeatRepository showSeatRepository;
     private final BookingSeatRepository bookingSeatRepository;
 
-    // TODO: Replace with SecurityContextHolder.getContext() after security implementation
     private Long getCurrentUserId() {
-        return 1L;
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        return userDetails.getId();
     }
 
     @PostMapping("/hold")
